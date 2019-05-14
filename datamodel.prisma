@@ -29,6 +29,7 @@ type Activity {
   place: String!
   status: Status!
   reply: String
+  createdAt: DateTime! @createdAt
 }
 
 type Advice {
@@ -37,13 +38,15 @@ type Advice {
   content: String!
   owner: User! @relation(name: "AdviceOwner", onDelete: SET_NULL)
   comments: [Comment!]! @relation(name: "AdviceComment", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
 }
 
 type Comment {
   id: ID! @id
   content: String!
   owner: User @relation(name: "CommentOwner", onDelete: SET_NULL)
-  advices: Advice @relation(name: "AdviceComment", onDelete: SET_NULL)
+  advice: Advice @relation(name: "AdviceComment", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
 }
 
 enum Sex {

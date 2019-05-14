@@ -113,8 +113,8 @@ export interface NexusPrismaTypes {
       UserCreateWithoutAdvicesInput: UserCreateWithoutAdvicesInputInputObject
       AdviceCreateManyWithoutOwnerInput: AdviceCreateManyWithoutOwnerInputInputObject
       AdviceCreateWithoutOwnerInput: AdviceCreateWithoutOwnerInputInputObject
-      CommentCreateManyWithoutAdvicesInput: CommentCreateManyWithoutAdvicesInputInputObject
-      CommentCreateWithoutAdvicesInput: CommentCreateWithoutAdvicesInputInputObject
+      CommentCreateManyWithoutAdviceInput: CommentCreateManyWithoutAdviceInputInputObject
+      CommentCreateWithoutAdviceInput: CommentCreateWithoutAdviceInputInputObject
       UserCreateOneWithoutCommentsInput: UserCreateOneWithoutCommentsInputInputObject
       UserCreateWithoutCommentsInput: UserCreateWithoutCommentsInputInputObject
       UserUpdateInput: UserUpdateInputInputObject
@@ -144,13 +144,13 @@ export interface NexusPrismaTypes {
       AdviceUpdateManyWithoutOwnerInput: AdviceUpdateManyWithoutOwnerInputInputObject
       AdviceUpdateWithWhereUniqueWithoutOwnerInput: AdviceUpdateWithWhereUniqueWithoutOwnerInputInputObject
       AdviceUpdateWithoutOwnerDataInput: AdviceUpdateWithoutOwnerDataInputInputObject
-      CommentUpdateManyWithoutAdvicesInput: CommentUpdateManyWithoutAdvicesInputInputObject
-      CommentUpdateWithWhereUniqueWithoutAdvicesInput: CommentUpdateWithWhereUniqueWithoutAdvicesInputInputObject
-      CommentUpdateWithoutAdvicesDataInput: CommentUpdateWithoutAdvicesDataInputInputObject
+      CommentUpdateManyWithoutAdviceInput: CommentUpdateManyWithoutAdviceInputInputObject
+      CommentUpdateWithWhereUniqueWithoutAdviceInput: CommentUpdateWithWhereUniqueWithoutAdviceInputInputObject
+      CommentUpdateWithoutAdviceDataInput: CommentUpdateWithoutAdviceDataInputInputObject
       UserUpdateOneWithoutCommentsInput: UserUpdateOneWithoutCommentsInputInputObject
       UserUpdateWithoutCommentsDataInput: UserUpdateWithoutCommentsDataInputInputObject
       UserUpsertWithoutCommentsInput: UserUpsertWithoutCommentsInputInputObject
-      CommentUpsertWithWhereUniqueWithoutAdvicesInput: CommentUpsertWithWhereUniqueWithoutAdvicesInputInputObject
+      CommentUpsertWithWhereUniqueWithoutAdviceInput: CommentUpsertWithWhereUniqueWithoutAdviceInputInputObject
       AdviceUpsertWithWhereUniqueWithoutOwnerInput: AdviceUpsertWithWhereUniqueWithoutOwnerInputInputObject
       AdviceScalarWhereInput: AdviceScalarWhereInputInputObject
       AdviceUpdateManyWithWhereNestedInput: AdviceUpdateManyWithWhereNestedInputInputObject
@@ -798,6 +798,7 @@ type ActivityObject =
   | { name: 'place', args?: [] | false, alias?: string  } 
   | { name: 'status', args?: [] | false, alias?: string  } 
   | { name: 'reply', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type ActivityFields =
   | 'id'
@@ -808,6 +809,7 @@ type ActivityFields =
   | 'place'
   | 'status'
   | 'reply'
+  | 'createdAt'
 
 
 
@@ -888,6 +890,14 @@ export interface ActivityFieldDetails {
     nullable: true
     resolve: undefined
   }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
 }
   
 
@@ -898,13 +908,15 @@ type CommentObject =
   | { name: 'id', args?: [] | false, alias?: string  } 
   | { name: 'content', args?: [] | false, alias?: string  } 
   | { name: 'owner', args?: [] | false, alias?: string  } 
-  | { name: 'advices', args?: [] | false, alias?: string  } 
+  | { name: 'advice', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type CommentFields =
   | 'id'
   | 'content'
   | 'owner'
-  | 'advices'
+  | 'advice'
+  | 'createdAt'
 
 
 
@@ -940,7 +952,7 @@ export interface CommentFieldDetails {
       info?: GraphQLResolveInfo
     ) => Promise<prisma.User | null> | prisma.User | null
   }
-  advices: {
+  advice: {
     type: 'Advice'
     args: {}
     description: string
@@ -952,6 +964,14 @@ export interface CommentFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.Advice | null> | prisma.Advice | null
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
   }
 }
   
@@ -965,6 +985,7 @@ type AdviceObject =
   | { name: 'content', args?: [] | false, alias?: string  } 
   | { name: 'owner', args?: [] | false, alias?: string  } 
   | { name: 'comments', args?: AdviceCommentsArgs[] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type AdviceFields =
   | 'id'
@@ -972,6 +993,7 @@ type AdviceFields =
   | 'content'
   | 'owner'
   | 'comments'
+  | 'createdAt'
 
 
 type AdviceCommentsArgs =
@@ -1034,6 +1056,14 @@ export interface AdviceFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.Comment[]> | prisma.Comment[]
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
   }
 }
   
@@ -2757,6 +2787,7 @@ type ActivityPreviousValuesObject =
   | { name: 'place', args?: [] | false, alias?: string  } 
   | { name: 'status', args?: [] | false, alias?: string  } 
   | { name: 'reply', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type ActivityPreviousValuesFields =
   | 'id'
@@ -2766,6 +2797,7 @@ type ActivityPreviousValuesFields =
   | 'place'
   | 'status'
   | 'reply'
+  | 'createdAt'
 
 
 
@@ -2831,6 +2863,14 @@ export interface ActivityPreviousValuesFieldDetails {
     description: string
     list: undefined
     nullable: true
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
     resolve: undefined
   }
 }
@@ -2913,11 +2953,13 @@ type AdvicePreviousValuesObject =
   | { name: 'id', args?: [] | false, alias?: string  } 
   | { name: 'title', args?: [] | false, alias?: string  } 
   | { name: 'content', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type AdvicePreviousValuesFields =
   | 'id'
   | 'title'
   | 'content'
+  | 'createdAt'
 
 
 
@@ -2942,6 +2984,14 @@ export interface AdvicePreviousValuesFieldDetails {
   }
   content: {
     type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
     args: {}
     description: string
     list: undefined
@@ -3027,10 +3077,12 @@ type CommentPreviousValuesObject =
   | CommentPreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
   | { name: 'content', args?: [] | false, alias?: string  } 
+  | { name: 'createdAt', args?: [] | false, alias?: string  } 
 
 type CommentPreviousValuesFields =
   | 'id'
   | 'content'
+  | 'createdAt'
 
 
 
@@ -3047,6 +3099,14 @@ export interface CommentPreviousValuesFieldDetails {
   }
   content: {
     type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  createdAt: {
+    type: 'DateTime'
     args: {}
     description: string
     list: undefined
@@ -3432,6 +3492,14 @@ export interface ActivityWhereInput {
   reply_not_starts_with?: string | null
   reply_ends_with?: string | null
   reply_not_ends_with?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: ActivityWhereInput[]
   OR?: ActivityWhereInput[]
   NOT?: ActivityWhereInput[]
@@ -3521,6 +3589,14 @@ export type ActivityWhereInputInputObject =
   | { name: 'reply_not_starts_with', alias?: string  } 
   | { name: 'reply_ends_with', alias?: string  } 
   | { name: 'reply_not_ends_with', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -3555,7 +3631,15 @@ export interface CommentWhereInput {
   content_ends_with?: string | null
   content_not_ends_with?: string | null
   owner?: UserWhereInput | null
-  advices?: AdviceWhereInput | null
+  advice?: AdviceWhereInput | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: CommentWhereInput[]
   OR?: CommentWhereInput[]
   NOT?: CommentWhereInput[]
@@ -3591,7 +3675,15 @@ export type CommentWhereInputInputObject =
   | { name: 'content_ends_with', alias?: string  } 
   | { name: 'content_not_ends_with', alias?: string  } 
   | { name: 'owner', alias?: string  } 
-  | { name: 'advices', alias?: string  } 
+  | { name: 'advice', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -3643,6 +3735,14 @@ export interface AdviceWhereInput {
   comments_every?: CommentWhereInput | null
   comments_some?: CommentWhereInput | null
   comments_none?: CommentWhereInput | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: AdviceWhereInput[]
   OR?: AdviceWhereInput[]
   NOT?: AdviceWhereInput[]
@@ -3695,6 +3795,14 @@ export type AdviceWhereInputInputObject =
   | { name: 'comments_every', alias?: string  } 
   | { name: 'comments_some', alias?: string  } 
   | { name: 'comments_none', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -3816,13 +3924,13 @@ export type CommentCreateManyWithoutOwnerInputInputObject =
 export interface CommentCreateWithoutOwnerInput {
   id?: string | null
   content?: string
-  advices?: AdviceCreateOneWithoutCommentsInput | null
+  advice?: AdviceCreateOneWithoutCommentsInput | null
 }
 export type CommentCreateWithoutOwnerInputInputObject =
   | Extract<keyof CommentCreateWithoutOwnerInput, string>
   | { name: 'id', alias?: string  } 
   | { name: 'content', alias?: string  } 
-  | { name: 'advices', alias?: string  } 
+  | { name: 'advice', alias?: string  } 
   
 export interface AdviceCreateOneWithoutCommentsInput {
   create?: AdviceCreateWithoutCommentsInput | null
@@ -3893,7 +4001,7 @@ export interface AdviceCreateWithoutOwnerInput {
   id?: string | null
   title?: string
   content?: string
-  comments?: CommentCreateManyWithoutAdvicesInput | null
+  comments?: CommentCreateManyWithoutAdviceInput | null
 }
 export type AdviceCreateWithoutOwnerInputInputObject =
   | Extract<keyof AdviceCreateWithoutOwnerInput, string>
@@ -3902,22 +4010,22 @@ export type AdviceCreateWithoutOwnerInputInputObject =
   | { name: 'content', alias?: string  } 
   | { name: 'comments', alias?: string  } 
   
-export interface CommentCreateManyWithoutAdvicesInput {
-  create?: CommentCreateWithoutAdvicesInput[]
+export interface CommentCreateManyWithoutAdviceInput {
+  create?: CommentCreateWithoutAdviceInput[]
   connect?: CommentWhereUniqueInput[]
 }
-export type CommentCreateManyWithoutAdvicesInputInputObject =
-  | Extract<keyof CommentCreateManyWithoutAdvicesInput, string>
+export type CommentCreateManyWithoutAdviceInputInputObject =
+  | Extract<keyof CommentCreateManyWithoutAdviceInput, string>
   | { name: 'create', alias?: string  } 
   | { name: 'connect', alias?: string  } 
   
-export interface CommentCreateWithoutAdvicesInput {
+export interface CommentCreateWithoutAdviceInput {
   id?: string | null
   content?: string
   owner?: UserCreateOneWithoutCommentsInput | null
 }
-export type CommentCreateWithoutAdvicesInputInputObject =
-  | Extract<keyof CommentCreateWithoutAdvicesInput, string>
+export type CommentCreateWithoutAdviceInputInputObject =
+  | Extract<keyof CommentCreateWithoutAdviceInput, string>
   | { name: 'id', alias?: string  } 
   | { name: 'content', alias?: string  } 
   | { name: 'owner', alias?: string  } 
@@ -4161,6 +4269,14 @@ export interface ActivityScalarWhereInput {
   reply_not_starts_with?: string | null
   reply_ends_with?: string | null
   reply_not_ends_with?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: ActivityScalarWhereInput[]
   OR?: ActivityScalarWhereInput[]
   NOT?: ActivityScalarWhereInput[]
@@ -4249,6 +4365,14 @@ export type ActivityScalarWhereInputInputObject =
   | { name: 'reply_not_starts_with', alias?: string  } 
   | { name: 'reply_ends_with', alias?: string  } 
   | { name: 'reply_not_ends_with', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -4313,12 +4437,12 @@ export type CommentUpdateWithWhereUniqueWithoutOwnerInputInputObject =
   
 export interface CommentUpdateWithoutOwnerDataInput {
   content?: string | null
-  advices?: AdviceUpdateOneWithoutCommentsInput | null
+  advice?: AdviceUpdateOneWithoutCommentsInput | null
 }
 export type CommentUpdateWithoutOwnerDataInputInputObject =
   | Extract<keyof CommentUpdateWithoutOwnerDataInput, string>
   | { name: 'content', alias?: string  } 
-  | { name: 'advices', alias?: string  } 
+  | { name: 'advice', alias?: string  } 
   
 export interface AdviceUpdateOneWithoutCommentsInput {
   create?: AdviceCreateWithoutCommentsInput | null
@@ -4442,6 +4566,14 @@ export interface CommentScalarWhereInput {
   content_not_starts_with?: string | null
   content_ends_with?: string | null
   content_not_ends_with?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: CommentScalarWhereInput[]
   OR?: CommentScalarWhereInput[]
   NOT?: CommentScalarWhereInput[]
@@ -4476,6 +4608,14 @@ export type CommentScalarWhereInputInputObject =
   | { name: 'content_not_starts_with', alias?: string  } 
   | { name: 'content_ends_with', alias?: string  } 
   | { name: 'content_not_ends_with', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -4531,7 +4671,7 @@ export type AdviceUpdateWithWhereUniqueWithoutOwnerInputInputObject =
 export interface AdviceUpdateWithoutOwnerDataInput {
   title?: string | null
   content?: string | null
-  comments?: CommentUpdateManyWithoutAdvicesInput | null
+  comments?: CommentUpdateManyWithoutAdviceInput | null
 }
 export type AdviceUpdateWithoutOwnerDataInputInputObject =
   | Extract<keyof AdviceUpdateWithoutOwnerDataInput, string>
@@ -4539,19 +4679,19 @@ export type AdviceUpdateWithoutOwnerDataInputInputObject =
   | { name: 'content', alias?: string  } 
   | { name: 'comments', alias?: string  } 
   
-export interface CommentUpdateManyWithoutAdvicesInput {
-  create?: CommentCreateWithoutAdvicesInput[]
+export interface CommentUpdateManyWithoutAdviceInput {
+  create?: CommentCreateWithoutAdviceInput[]
   delete?: CommentWhereUniqueInput[]
   connect?: CommentWhereUniqueInput[]
   set?: CommentWhereUniqueInput[]
   disconnect?: CommentWhereUniqueInput[]
-  update?: CommentUpdateWithWhereUniqueWithoutAdvicesInput[]
-  upsert?: CommentUpsertWithWhereUniqueWithoutAdvicesInput[]
+  update?: CommentUpdateWithWhereUniqueWithoutAdviceInput[]
+  upsert?: CommentUpsertWithWhereUniqueWithoutAdviceInput[]
   deleteMany?: CommentScalarWhereInput[]
   updateMany?: CommentUpdateManyWithWhereNestedInput[]
 }
-export type CommentUpdateManyWithoutAdvicesInputInputObject =
-  | Extract<keyof CommentUpdateManyWithoutAdvicesInput, string>
+export type CommentUpdateManyWithoutAdviceInputInputObject =
+  | Extract<keyof CommentUpdateManyWithoutAdviceInput, string>
   | { name: 'create', alias?: string  } 
   | { name: 'delete', alias?: string  } 
   | { name: 'connect', alias?: string  } 
@@ -4562,21 +4702,21 @@ export type CommentUpdateManyWithoutAdvicesInputInputObject =
   | { name: 'deleteMany', alias?: string  } 
   | { name: 'updateMany', alias?: string  } 
   
-export interface CommentUpdateWithWhereUniqueWithoutAdvicesInput {
+export interface CommentUpdateWithWhereUniqueWithoutAdviceInput {
   where?: CommentWhereUniqueInput
-  data?: CommentUpdateWithoutAdvicesDataInput
+  data?: CommentUpdateWithoutAdviceDataInput
 }
-export type CommentUpdateWithWhereUniqueWithoutAdvicesInputInputObject =
-  | Extract<keyof CommentUpdateWithWhereUniqueWithoutAdvicesInput, string>
+export type CommentUpdateWithWhereUniqueWithoutAdviceInputInputObject =
+  | Extract<keyof CommentUpdateWithWhereUniqueWithoutAdviceInput, string>
   | { name: 'where', alias?: string  } 
   | { name: 'data', alias?: string  } 
   
-export interface CommentUpdateWithoutAdvicesDataInput {
+export interface CommentUpdateWithoutAdviceDataInput {
   content?: string | null
   owner?: UserUpdateOneWithoutCommentsInput | null
 }
-export type CommentUpdateWithoutAdvicesDataInputInputObject =
-  | Extract<keyof CommentUpdateWithoutAdvicesDataInput, string>
+export type CommentUpdateWithoutAdviceDataInputInputObject =
+  | Extract<keyof CommentUpdateWithoutAdviceDataInput, string>
   | { name: 'content', alias?: string  } 
   | { name: 'owner', alias?: string  } 
   
@@ -4629,13 +4769,13 @@ export type UserUpsertWithoutCommentsInputInputObject =
   | { name: 'update', alias?: string  } 
   | { name: 'create', alias?: string  } 
   
-export interface CommentUpsertWithWhereUniqueWithoutAdvicesInput {
+export interface CommentUpsertWithWhereUniqueWithoutAdviceInput {
   where?: CommentWhereUniqueInput
-  update?: CommentUpdateWithoutAdvicesDataInput
-  create?: CommentCreateWithoutAdvicesInput
+  update?: CommentUpdateWithoutAdviceDataInput
+  create?: CommentCreateWithoutAdviceInput
 }
-export type CommentUpsertWithWhereUniqueWithoutAdvicesInputInputObject =
-  | Extract<keyof CommentUpsertWithWhereUniqueWithoutAdvicesInput, string>
+export type CommentUpsertWithWhereUniqueWithoutAdviceInputInputObject =
+  | Extract<keyof CommentUpsertWithWhereUniqueWithoutAdviceInput, string>
   | { name: 'where', alias?: string  } 
   | { name: 'update', alias?: string  } 
   | { name: 'create', alias?: string  } 
@@ -4694,6 +4834,14 @@ export interface AdviceScalarWhereInput {
   content_not_starts_with?: string | null
   content_ends_with?: string | null
   content_not_ends_with?: string | null
+  createdAt?: string | null
+  createdAt_not?: string | null
+  createdAt_in?: string[]
+  createdAt_not_in?: string[]
+  createdAt_lt?: string | null
+  createdAt_lte?: string | null
+  createdAt_gt?: string | null
+  createdAt_gte?: string | null
   AND?: AdviceScalarWhereInput[]
   OR?: AdviceScalarWhereInput[]
   NOT?: AdviceScalarWhereInput[]
@@ -4742,6 +4890,14 @@ export type AdviceScalarWhereInputInputObject =
   | { name: 'content_not_starts_with', alias?: string  } 
   | { name: 'content_ends_with', alias?: string  } 
   | { name: 'content_not_ends_with', alias?: string  } 
+  | { name: 'createdAt', alias?: string  } 
+  | { name: 'createdAt_not', alias?: string  } 
+  | { name: 'createdAt_in', alias?: string  } 
+  | { name: 'createdAt_not_in', alias?: string  } 
+  | { name: 'createdAt_lt', alias?: string  } 
+  | { name: 'createdAt_lte', alias?: string  } 
+  | { name: 'createdAt_gt', alias?: string  } 
+  | { name: 'createdAt_gte', alias?: string  } 
   | { name: 'AND', alias?: string  } 
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
@@ -5254,7 +5410,7 @@ export interface AdviceCreateInput {
   title?: string
   content?: string
   owner?: UserCreateOneWithoutAdvicesInput
-  comments?: CommentCreateManyWithoutAdvicesInput | null
+  comments?: CommentCreateManyWithoutAdviceInput | null
 }
 export type AdviceCreateInputInputObject =
   | Extract<keyof AdviceCreateInput, string>
@@ -5268,7 +5424,7 @@ export interface AdviceUpdateInput {
   title?: string | null
   content?: string | null
   owner?: UserUpdateOneRequiredWithoutAdvicesInput | null
-  comments?: CommentUpdateManyWithoutAdvicesInput | null
+  comments?: CommentUpdateManyWithoutAdviceInput | null
 }
 export type AdviceUpdateInputInputObject =
   | Extract<keyof AdviceUpdateInput, string>
@@ -5290,25 +5446,25 @@ export interface CommentCreateInput {
   id?: string | null
   content?: string
   owner?: UserCreateOneWithoutCommentsInput | null
-  advices?: AdviceCreateOneWithoutCommentsInput | null
+  advice?: AdviceCreateOneWithoutCommentsInput | null
 }
 export type CommentCreateInputInputObject =
   | Extract<keyof CommentCreateInput, string>
   | { name: 'id', alias?: string  } 
   | { name: 'content', alias?: string  } 
   | { name: 'owner', alias?: string  } 
-  | { name: 'advices', alias?: string  } 
+  | { name: 'advice', alias?: string  } 
   
 export interface CommentUpdateInput {
   content?: string | null
   owner?: UserUpdateOneWithoutCommentsInput | null
-  advices?: AdviceUpdateOneWithoutCommentsInput | null
+  advice?: AdviceUpdateOneWithoutCommentsInput | null
 }
 export type CommentUpdateInputInputObject =
   | Extract<keyof CommentUpdateInput, string>
   | { name: 'content', alias?: string  } 
   | { name: 'owner', alias?: string  } 
-  | { name: 'advices', alias?: string  } 
+  | { name: 'advice', alias?: string  } 
   
 export interface CommentUpdateManyMutationInput {
   content?: string | null

@@ -1,10 +1,10 @@
 import {prismaObjectType} from "nexus-prisma";
-import { hash, compare } from 'bcrypt'
-import {arg, idArg, intArg, stringArg} from "nexus";
-import { APP_SECRET} from '../utils'
-import { sign } from 'jsonwebtoken'
+import {compare, hash} from 'bcrypt'
+import {arg, intArg, stringArg} from "nexus";
+import {APP_SECRET} from '../utils'
+import {sign} from 'jsonwebtoken'
 import {Role, Sex} from "./Enum";
-import {requiredInt, requiredString} from "../types";
+import {requiredId, requiredInt, requiredString} from "../types";
 import {Address} from "../generated/prisma-client";
 
 
@@ -140,7 +140,7 @@ export const Mutation = prismaObjectType({
         t.field('updateResident',{
             type:'User',
             args:{
-                id:idArg({required:true}),
+                id:requiredId({}),
                 name:stringArg(),
                 idNumber:stringArg(),
                 phoneNumber:stringArg(),
@@ -201,6 +201,59 @@ export const Mutation = prismaObjectType({
                     }
                 }
                 return user
+            }
+        });
+        t.field('createWorker',{
+            type:"User",
+            args:{
+                name:requiredString({}),
+                idNumber:requiredString({}),
+                phoneNumber:requiredString({}),
+                password:requiredString({})
+            },
+            resolve:async (parent,{name,idNumber,phoneNumber,password},context)=>{
+                const hashedPassword=await hash(password,10);
+            return await context.prisma.createUser({
+                    name,
+                    idNumber,
+                    phoneNumber,
+                    password: hashedPassword,
+                    role: 'WORKER',
+                })
+            }
+        });
+        t.field('updateWorker',{
+            type:'User',
+            args:{
+                id:requiredId({}),
+                name:requiredString({}),
+                idNumber:requiredString({}),
+                phoneNumber:requiredString({}),
+                password:requiredString({})
+            },
+            resolve:async (parent,{id,name,idNumber,phoneNumber,password},context)=>{
+                if (password=='******'){
+                    return await context.prisma.updateUser({
+                        where: {id},
+                        data: {
+                            name,
+                            idNumber,
+                            phoneNumber,
+                        }
+                    });
+                }
+                else{
+                    const hashedPassword=await hash(password,10);
+                    return await context.prisma.updateUser({
+                        where: {id},
+                        data: {
+                            name,
+                            idNumber,
+                            phoneNumber,
+                            password:hashedPassword
+                        }
+                    });
+                }
             }
         })
     }
