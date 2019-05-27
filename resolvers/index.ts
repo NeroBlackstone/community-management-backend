@@ -3,7 +3,7 @@ import {Mutation} from "./Mutation";
 import {AuthPayload} from "./AuthPayload";
 import {Sex,Status,Role} from "./Enum"
 
-export const resouvers={
+export const resolvers={
     Query,
     Mutation,
     AuthPayload,

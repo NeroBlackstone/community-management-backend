@@ -5,23 +5,7 @@ import { makePrismaSchema } from 'nexus-prisma'
 import { GraphQLServer } from 'graphql-yoga'
 import * as allTypes from './resolvers'
 import {permissions} from "./permissions";
-/*const Query=prismaObjectType({
-    name:'Query',
-    definition(t){
-        t.prismaFields(['users'])
-        t.list.field('allUsersByRole',{
-            type:'User',
-            args:{
-                role:arg({
-                    type:Role,
-                    required:true
-                }),
-            },
-            resolve:(_,{role},ctx)=>ctx.prisma.users({where:{role:role}})
-        })
 
-    }
-})*/
 const schema = makePrismaSchema({
     // Provide all the GraphQL types we've implemented
     types: allTypes,

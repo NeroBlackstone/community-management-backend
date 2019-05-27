@@ -64,11 +64,11 @@ export const Mutation = prismaObjectType({
             resolve:async (parent,{idNumber,password},context)=>{
                 const user=await context.prisma.user({idNumber});
                 if (!user){
-                    throw new Error(`No user found for idNumber: ${idNumber}`)
+                    throw new Error(`身份证号 ${idNumber}没有相应的居民`)
                 }
                 const passwordValid=await compare(password,user.password);
                 if (!passwordValid) {
-                    throw new Error('Invalid password')
+                    throw new Error('无效的密码')
                 }
                 return {
                     token: sign({ userId: user.id }, APP_SECRET),
@@ -232,7 +232,7 @@ export const Mutation = prismaObjectType({
                 password:requiredString({})
             },
             resolve:async (parent,{id,name,idNumber,phoneNumber,password},context)=>{
-                if (password=='******'){
+                if (password==='******'){
                     return await context.prisma.updateUser({
                         where: {id},
                         data: {

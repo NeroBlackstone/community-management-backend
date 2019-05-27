@@ -49,6 +49,14 @@ type Comment {
   createdAt: DateTime! @createdAt
 }
 
+type File{
+  id: ID! @id
+  path: String!
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 enum Sex {
   MALE
   FEMALE

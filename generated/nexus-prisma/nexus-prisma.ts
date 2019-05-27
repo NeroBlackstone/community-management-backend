@@ -36,6 +36,10 @@ export interface NexusPrismaTypes {
       CommentConnection: CommentConnectionObject
       CommentEdge: CommentEdgeObject
       AggregateComment: AggregateCommentObject
+      File: FileObject
+      FileConnection: FileConnectionObject
+      FileEdge: FileEdgeObject
+      AggregateFile: AggregateFileObject
       Mutation: MutationObject
       BatchPayload: BatchPayloadObject
       Subscription: SubscriptionObject
@@ -49,6 +53,8 @@ export interface NexusPrismaTypes {
       AdvicePreviousValues: AdvicePreviousValuesObject
       CommentSubscriptionPayload: CommentSubscriptionPayloadObject
       CommentPreviousValues: CommentPreviousValuesObject
+      FileSubscriptionPayload: FileSubscriptionPayloadObject
+      FilePreviousValues: FilePreviousValuesObject
     }
     fieldsDetails: {
       Query: QueryFieldDetails
@@ -73,6 +79,10 @@ export interface NexusPrismaTypes {
       CommentConnection: CommentConnectionFieldDetails
       CommentEdge: CommentEdgeFieldDetails
       AggregateComment: AggregateCommentFieldDetails
+      File: FileFieldDetails
+      FileConnection: FileConnectionFieldDetails
+      FileEdge: FileEdgeFieldDetails
+      AggregateFile: AggregateFileFieldDetails
       Mutation: MutationFieldDetails
       BatchPayload: BatchPayloadFieldDetails
       Subscription: SubscriptionFieldDetails
@@ -86,6 +96,8 @@ export interface NexusPrismaTypes {
       AdvicePreviousValues: AdvicePreviousValuesFieldDetails
       CommentSubscriptionPayload: CommentSubscriptionPayloadFieldDetails
       CommentPreviousValues: CommentPreviousValuesFieldDetails
+      FileSubscriptionPayload: FileSubscriptionPayloadFieldDetails
+      FilePreviousValues: FilePreviousValuesFieldDetails
     }
   }
   inputTypes: {
@@ -100,6 +112,8 @@ export interface NexusPrismaTypes {
       ActivityWhereUniqueInput: ActivityWhereUniqueInputInputObject
       AdviceWhereUniqueInput: AdviceWhereUniqueInputInputObject
       CommentWhereUniqueInput: CommentWhereUniqueInputInputObject
+      FileWhereUniqueInput: FileWhereUniqueInputInputObject
+      FileWhereInput: FileWhereInputInputObject
       UserCreateInput: UserCreateInputInputObject
       AddressCreateOneWithoutUsersInput: AddressCreateOneWithoutUsersInputInputObject
       AddressCreateWithoutUsersInput: AddressCreateWithoutUsersInputInputObject
@@ -182,11 +196,15 @@ export interface NexusPrismaTypes {
       CommentCreateInput: CommentCreateInputInputObject
       CommentUpdateInput: CommentUpdateInputInputObject
       CommentUpdateManyMutationInput: CommentUpdateManyMutationInputInputObject
+      FileCreateInput: FileCreateInputInputObject
+      FileUpdateInput: FileUpdateInputInputObject
+      FileUpdateManyMutationInput: FileUpdateManyMutationInputInputObject
       UserSubscriptionWhereInput: UserSubscriptionWhereInputInputObject
       AddressSubscriptionWhereInput: AddressSubscriptionWhereInputInputObject
       ActivitySubscriptionWhereInput: ActivitySubscriptionWhereInputInputObject
       AdviceSubscriptionWhereInput: AdviceSubscriptionWhereInputInputObject
       CommentSubscriptionWhereInput: CommentSubscriptionWhereInputInputObject
+      FileSubscriptionWhereInput: FileSubscriptionWhereInputInputObject
     }
   }
   enumTypes: {
@@ -198,6 +216,7 @@ export interface NexusPrismaTypes {
     CommentOrderByInput: CommentOrderByInputValues,
     AdviceOrderByInput: AdviceOrderByInputValues,
     AddressOrderByInput: AddressOrderByInputValues,
+    FileOrderByInput: FileOrderByInputValues,
     MutationType: MutationTypeValues,
   }
 }
@@ -221,6 +240,9 @@ type QueryObject =
   | { name: 'comment', args?: QueryCommentArgs[] | false, alias?: string  } 
   | { name: 'comments', args?: QueryCommentsArgs[] | false, alias?: string  } 
   | { name: 'commentsConnection', args?: QueryCommentsConnectionArgs[] | false, alias?: string  } 
+  | { name: 'file', args?: QueryFileArgs[] | false, alias?: string  } 
+  | { name: 'files', args?: QueryFilesArgs[] | false, alias?: string  } 
+  | { name: 'filesConnection', args?: QueryFilesConnectionArgs[] | false, alias?: string  } 
 
 type QueryFields =
   | 'user'
@@ -238,6 +260,9 @@ type QueryFields =
   | 'comment'
   | 'comments'
   | 'commentsConnection'
+  | 'file'
+  | 'files'
+  | 'filesConnection'
 
 
 type QueryUserArgs =
@@ -323,6 +348,24 @@ type QueryCommentsArgs =
   | 'first'
   | 'last'
 type QueryCommentsConnectionArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
+type QueryFileArgs =
+  | 'where'
+type QueryFilesArgs =
+  | 'where'
+  | 'orderBy'
+  | 'skip'
+  | 'after'
+  | 'before'
+  | 'first'
+  | 'last'
+type QueryFilesConnectionArgs =
   | 'where'
   | 'orderBy'
   | 'skip'
@@ -527,6 +570,45 @@ export interface QueryFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.CommentConnection> | prisma.CommentConnection
+  }
+  file: {
+    type: 'File'
+    args: Record<QueryFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where: FileWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File | null> | prisma.File | null
+  }
+  files: {
+    type: 'File'
+    args: Record<QueryFilesArgs, core.NexusArgDef<string>>
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where?: FileWhereInput | null, orderBy?: prisma.FileOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File[]> | prisma.File[]
+  }
+  filesConnection: {
+    type: 'FileConnection'
+    args: Record<QueryFilesConnectionArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Query">,
+      args: { where?: FileWhereInput | null, orderBy?: prisma.FileOrderByInput | null, skip?: number | null, after?: string | null, before?: string | null, first?: number | null, last?: number | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.FileConnection> | prisma.FileConnection
   }
 }
   
@@ -1748,6 +1830,196 @@ export interface AggregateCommentFieldDetails {
 }
   
 
+// Types for File
+
+type FileObject =
+  | FileFields
+  | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'path', args?: [] | false, alias?: string  } 
+  | { name: 'filename', args?: [] | false, alias?: string  } 
+  | { name: 'mimetype', args?: [] | false, alias?: string  } 
+  | { name: 'encoding', args?: [] | false, alias?: string  } 
+
+type FileFields =
+  | 'id'
+  | 'path'
+  | 'filename'
+  | 'mimetype'
+  | 'encoding'
+
+
+
+  
+
+export interface FileFieldDetails {
+  id: {
+    type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  path: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  filename: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  mimetype: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  encoding: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
+// Types for FileConnection
+
+type FileConnectionObject =
+  | FileConnectionFields
+  | { name: 'pageInfo', args?: [] | false, alias?: string  } 
+  | { name: 'edges', args?: [] | false, alias?: string  } 
+  | { name: 'aggregate', args?: [] | false, alias?: string  } 
+
+type FileConnectionFields =
+  | 'pageInfo'
+  | 'edges'
+  | 'aggregate'
+
+
+
+  
+
+export interface FileConnectionFieldDetails {
+  pageInfo: {
+    type: 'PageInfo'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"FileConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.PageInfo> | prisma.PageInfo
+  }
+  edges: {
+    type: 'FileEdge'
+    args: {}
+    description: string
+    list: true
+    nullable: false
+    resolve: (
+      root: core.RootValue<"FileConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.FileEdge[]> | prisma.FileEdge[]
+  }
+  aggregate: {
+    type: 'AggregateFile'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"FileConnection">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.AggregateFile> | prisma.AggregateFile
+  }
+}
+  
+
+// Types for FileEdge
+
+type FileEdgeObject =
+  | FileEdgeFields
+  | { name: 'node', args?: [] | false, alias?: string  } 
+  | { name: 'cursor', args?: [] | false, alias?: string  } 
+
+type FileEdgeFields =
+  | 'node'
+  | 'cursor'
+
+
+
+  
+
+export interface FileEdgeFieldDetails {
+  node: {
+    type: 'File'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"FileEdge">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File> | prisma.File
+  }
+  cursor: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
+// Types for AggregateFile
+
+type AggregateFileObject =
+  | AggregateFileFields
+  | { name: 'count', args?: [] | false, alias?: string  } 
+
+type AggregateFileFields =
+  | 'count'
+
+
+
+  
+
+export interface AggregateFileFieldDetails {
+  count: {
+    type: 'Int'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
 // Types for Mutation
 
 type MutationObject =
@@ -1782,6 +2054,12 @@ type MutationObject =
   | { name: 'upsertComment', args?: MutationUpsertCommentArgs[] | false, alias?: string  } 
   | { name: 'deleteComment', args?: MutationDeleteCommentArgs[] | false, alias?: string  } 
   | { name: 'deleteManyComments', args?: MutationDeleteManyCommentsArgs[] | false, alias?: string  } 
+  | { name: 'createFile', args?: MutationCreateFileArgs[] | false, alias?: string  } 
+  | { name: 'updateFile', args?: MutationUpdateFileArgs[] | false, alias?: string  } 
+  | { name: 'updateManyFiles', args?: MutationUpdateManyFilesArgs[] | false, alias?: string  } 
+  | { name: 'upsertFile', args?: MutationUpsertFileArgs[] | false, alias?: string  } 
+  | { name: 'deleteFile', args?: MutationDeleteFileArgs[] | false, alias?: string  } 
+  | { name: 'deleteManyFiles', args?: MutationDeleteManyFilesArgs[] | false, alias?: string  } 
 
 type MutationFields =
   | 'createUser'
@@ -1814,6 +2092,12 @@ type MutationFields =
   | 'upsertComment'
   | 'deleteComment'
   | 'deleteManyComments'
+  | 'createFile'
+  | 'updateFile'
+  | 'updateManyFiles'
+  | 'upsertFile'
+  | 'deleteFile'
+  | 'deleteManyFiles'
 
 
 type MutationCreateUserArgs =
@@ -1895,6 +2179,22 @@ type MutationUpsertCommentArgs =
 type MutationDeleteCommentArgs =
   | 'where'
 type MutationDeleteManyCommentsArgs =
+  | 'where'
+type MutationCreateFileArgs =
+  | 'data'
+type MutationUpdateFileArgs =
+  | 'data'
+  | 'where'
+type MutationUpdateManyFilesArgs =
+  | 'data'
+  | 'where'
+type MutationUpsertFileArgs =
+  | 'where'
+  | 'create'
+  | 'update'
+type MutationDeleteFileArgs =
+  | 'where'
+type MutationDeleteManyFilesArgs =
   | 'where'
   
 
@@ -2289,6 +2589,84 @@ export interface MutationFieldDetails {
       info?: GraphQLResolveInfo
     ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
   }
+  createFile: {
+    type: 'File'
+    args: Record<MutationCreateFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: FileCreateInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File> | prisma.File
+  }
+  updateFile: {
+    type: 'File'
+    args: Record<MutationUpdateFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: FileUpdateInput, where: FileWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File | null> | prisma.File | null
+  }
+  updateManyFiles: {
+    type: 'BatchPayload'
+    args: Record<MutationUpdateManyFilesArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { data: FileUpdateManyMutationInput, where?: FileWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
+  }
+  upsertFile: {
+    type: 'File'
+    args: Record<MutationUpsertFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where: FileWhereUniqueInput, create: FileCreateInput, update: FileUpdateInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File> | prisma.File
+  }
+  deleteFile: {
+    type: 'File'
+    args: Record<MutationDeleteFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where: FileWhereUniqueInput }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File | null> | prisma.File | null
+  }
+  deleteManyFiles: {
+    type: 'BatchPayload'
+    args: Record<MutationDeleteManyFilesArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"Mutation">,
+      args: { where?: FileWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.BatchPayload> | prisma.BatchPayload
+  }
 }
   
 
@@ -2326,6 +2704,7 @@ type SubscriptionObject =
   | { name: 'activity', args?: SubscriptionActivityArgs[] | false, alias?: string  } 
   | { name: 'advice', args?: SubscriptionAdviceArgs[] | false, alias?: string  } 
   | { name: 'comment', args?: SubscriptionCommentArgs[] | false, alias?: string  } 
+  | { name: 'file', args?: SubscriptionFileArgs[] | false, alias?: string  } 
 
 type SubscriptionFields =
   | 'user'
@@ -2333,6 +2712,7 @@ type SubscriptionFields =
   | 'activity'
   | 'advice'
   | 'comment'
+  | 'file'
 
 
 type SubscriptionUserArgs =
@@ -2344,6 +2724,8 @@ type SubscriptionActivityArgs =
 type SubscriptionAdviceArgs =
   | 'where'
 type SubscriptionCommentArgs =
+  | 'where'
+type SubscriptionFileArgs =
   | 'where'
   
 
@@ -2412,6 +2794,19 @@ export interface SubscriptionFieldDetails {
       context: core.GetGen<"context">,
       info?: GraphQLResolveInfo
     ) => Promise<prisma.CommentSubscriptionPayload | null> | prisma.CommentSubscriptionPayload | null
+  }
+  file: {
+    type: 'FileSubscriptionPayload'
+    args: Record<SubscriptionFileArgs, core.NexusArgDef<string>>
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"Subscription">,
+      args: { where?: FileSubscriptionWhereInput | null }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.FileSubscriptionPayload | null> | prisma.FileSubscriptionPayload | null
   }
 }
   
@@ -3107,6 +3502,141 @@ export interface CommentPreviousValuesFieldDetails {
   }
   createdAt: {
     type: 'DateTime'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+}
+  
+
+// Types for FileSubscriptionPayload
+
+type FileSubscriptionPayloadObject =
+  | FileSubscriptionPayloadFields
+  | { name: 'mutation', args?: [] | false, alias?: string  } 
+  | { name: 'node', args?: [] | false, alias?: string  } 
+  | { name: 'updatedFields', args?: [] | false, alias?: string  } 
+  | { name: 'previousValues', args?: [] | false, alias?: string  } 
+
+type FileSubscriptionPayloadFields =
+  | 'mutation'
+  | 'node'
+  | 'updatedFields'
+  | 'previousValues'
+
+
+
+  
+
+export interface FileSubscriptionPayloadFieldDetails {
+  mutation: {
+    type: 'MutationType'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: (
+      root: core.RootValue<"FileSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.MutationType> | prisma.MutationType
+  }
+  node: {
+    type: 'File'
+    args: {}
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"FileSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.File | null> | prisma.File | null
+  }
+  updatedFields: {
+    type: 'String'
+    args: {}
+    description: string
+    list: true
+    nullable: false
+    resolve: undefined
+  }
+  previousValues: {
+    type: 'FilePreviousValues'
+    args: {}
+    description: string
+    list: undefined
+    nullable: true
+    resolve: (
+      root: core.RootValue<"FileSubscriptionPayload">,
+      args: {  }  ,
+      context: core.GetGen<"context">,
+      info?: GraphQLResolveInfo
+    ) => Promise<prisma.FilePreviousValues | null> | prisma.FilePreviousValues | null
+  }
+}
+  
+
+// Types for FilePreviousValues
+
+type FilePreviousValuesObject =
+  | FilePreviousValuesFields
+  | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'path', args?: [] | false, alias?: string  } 
+  | { name: 'filename', args?: [] | false, alias?: string  } 
+  | { name: 'mimetype', args?: [] | false, alias?: string  } 
+  | { name: 'encoding', args?: [] | false, alias?: string  } 
+
+type FilePreviousValuesFields =
+  | 'id'
+  | 'path'
+  | 'filename'
+  | 'mimetype'
+  | 'encoding'
+
+
+
+  
+
+export interface FilePreviousValuesFieldDetails {
+  id: {
+    type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  path: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  filename: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  mimetype: {
+    type: 'String'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  encoding: {
+    type: 'String'
     args: {}
     description: string
     list: undefined
@@ -3834,6 +4364,164 @@ export interface CommentWhereUniqueInput {
 export type CommentWhereUniqueInputInputObject =
   | Extract<keyof CommentWhereUniqueInput, string>
   | { name: 'id', alias?: string  } 
+  
+export interface FileWhereUniqueInput {
+  id?: string | null
+}
+export type FileWhereUniqueInputInputObject =
+  | Extract<keyof FileWhereUniqueInput, string>
+  | { name: 'id', alias?: string  } 
+  
+export interface FileWhereInput {
+  id?: string | null
+  id_not?: string | null
+  id_in?: string[]
+  id_not_in?: string[]
+  id_lt?: string | null
+  id_lte?: string | null
+  id_gt?: string | null
+  id_gte?: string | null
+  id_contains?: string | null
+  id_not_contains?: string | null
+  id_starts_with?: string | null
+  id_not_starts_with?: string | null
+  id_ends_with?: string | null
+  id_not_ends_with?: string | null
+  path?: string | null
+  path_not?: string | null
+  path_in?: string[]
+  path_not_in?: string[]
+  path_lt?: string | null
+  path_lte?: string | null
+  path_gt?: string | null
+  path_gte?: string | null
+  path_contains?: string | null
+  path_not_contains?: string | null
+  path_starts_with?: string | null
+  path_not_starts_with?: string | null
+  path_ends_with?: string | null
+  path_not_ends_with?: string | null
+  filename?: string | null
+  filename_not?: string | null
+  filename_in?: string[]
+  filename_not_in?: string[]
+  filename_lt?: string | null
+  filename_lte?: string | null
+  filename_gt?: string | null
+  filename_gte?: string | null
+  filename_contains?: string | null
+  filename_not_contains?: string | null
+  filename_starts_with?: string | null
+  filename_not_starts_with?: string | null
+  filename_ends_with?: string | null
+  filename_not_ends_with?: string | null
+  mimetype?: string | null
+  mimetype_not?: string | null
+  mimetype_in?: string[]
+  mimetype_not_in?: string[]
+  mimetype_lt?: string | null
+  mimetype_lte?: string | null
+  mimetype_gt?: string | null
+  mimetype_gte?: string | null
+  mimetype_contains?: string | null
+  mimetype_not_contains?: string | null
+  mimetype_starts_with?: string | null
+  mimetype_not_starts_with?: string | null
+  mimetype_ends_with?: string | null
+  mimetype_not_ends_with?: string | null
+  encoding?: string | null
+  encoding_not?: string | null
+  encoding_in?: string[]
+  encoding_not_in?: string[]
+  encoding_lt?: string | null
+  encoding_lte?: string | null
+  encoding_gt?: string | null
+  encoding_gte?: string | null
+  encoding_contains?: string | null
+  encoding_not_contains?: string | null
+  encoding_starts_with?: string | null
+  encoding_not_starts_with?: string | null
+  encoding_ends_with?: string | null
+  encoding_not_ends_with?: string | null
+  AND?: FileWhereInput[]
+  OR?: FileWhereInput[]
+  NOT?: FileWhereInput[]
+}
+export type FileWhereInputInputObject =
+  | Extract<keyof FileWhereInput, string>
+  | { name: 'id', alias?: string  } 
+  | { name: 'id_not', alias?: string  } 
+  | { name: 'id_in', alias?: string  } 
+  | { name: 'id_not_in', alias?: string  } 
+  | { name: 'id_lt', alias?: string  } 
+  | { name: 'id_lte', alias?: string  } 
+  | { name: 'id_gt', alias?: string  } 
+  | { name: 'id_gte', alias?: string  } 
+  | { name: 'id_contains', alias?: string  } 
+  | { name: 'id_not_contains', alias?: string  } 
+  | { name: 'id_starts_with', alias?: string  } 
+  | { name: 'id_not_starts_with', alias?: string  } 
+  | { name: 'id_ends_with', alias?: string  } 
+  | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'path', alias?: string  } 
+  | { name: 'path_not', alias?: string  } 
+  | { name: 'path_in', alias?: string  } 
+  | { name: 'path_not_in', alias?: string  } 
+  | { name: 'path_lt', alias?: string  } 
+  | { name: 'path_lte', alias?: string  } 
+  | { name: 'path_gt', alias?: string  } 
+  | { name: 'path_gte', alias?: string  } 
+  | { name: 'path_contains', alias?: string  } 
+  | { name: 'path_not_contains', alias?: string  } 
+  | { name: 'path_starts_with', alias?: string  } 
+  | { name: 'path_not_starts_with', alias?: string  } 
+  | { name: 'path_ends_with', alias?: string  } 
+  | { name: 'path_not_ends_with', alias?: string  } 
+  | { name: 'filename', alias?: string  } 
+  | { name: 'filename_not', alias?: string  } 
+  | { name: 'filename_in', alias?: string  } 
+  | { name: 'filename_not_in', alias?: string  } 
+  | { name: 'filename_lt', alias?: string  } 
+  | { name: 'filename_lte', alias?: string  } 
+  | { name: 'filename_gt', alias?: string  } 
+  | { name: 'filename_gte', alias?: string  } 
+  | { name: 'filename_contains', alias?: string  } 
+  | { name: 'filename_not_contains', alias?: string  } 
+  | { name: 'filename_starts_with', alias?: string  } 
+  | { name: 'filename_not_starts_with', alias?: string  } 
+  | { name: 'filename_ends_with', alias?: string  } 
+  | { name: 'filename_not_ends_with', alias?: string  } 
+  | { name: 'mimetype', alias?: string  } 
+  | { name: 'mimetype_not', alias?: string  } 
+  | { name: 'mimetype_in', alias?: string  } 
+  | { name: 'mimetype_not_in', alias?: string  } 
+  | { name: 'mimetype_lt', alias?: string  } 
+  | { name: 'mimetype_lte', alias?: string  } 
+  | { name: 'mimetype_gt', alias?: string  } 
+  | { name: 'mimetype_gte', alias?: string  } 
+  | { name: 'mimetype_contains', alias?: string  } 
+  | { name: 'mimetype_not_contains', alias?: string  } 
+  | { name: 'mimetype_starts_with', alias?: string  } 
+  | { name: 'mimetype_not_starts_with', alias?: string  } 
+  | { name: 'mimetype_ends_with', alias?: string  } 
+  | { name: 'mimetype_not_ends_with', alias?: string  } 
+  | { name: 'encoding', alias?: string  } 
+  | { name: 'encoding_not', alias?: string  } 
+  | { name: 'encoding_in', alias?: string  } 
+  | { name: 'encoding_not_in', alias?: string  } 
+  | { name: 'encoding_lt', alias?: string  } 
+  | { name: 'encoding_lte', alias?: string  } 
+  | { name: 'encoding_gt', alias?: string  } 
+  | { name: 'encoding_gte', alias?: string  } 
+  | { name: 'encoding_contains', alias?: string  } 
+  | { name: 'encoding_not_contains', alias?: string  } 
+  | { name: 'encoding_starts_with', alias?: string  } 
+  | { name: 'encoding_not_starts_with', alias?: string  } 
+  | { name: 'encoding_ends_with', alias?: string  } 
+  | { name: 'encoding_not_ends_with', alias?: string  } 
+  | { name: 'AND', alias?: string  } 
+  | { name: 'OR', alias?: string  } 
+  | { name: 'NOT', alias?: string  } 
   
 export interface UserCreateInput {
   id?: string | null
@@ -5473,6 +6161,47 @@ export type CommentUpdateManyMutationInputInputObject =
   | Extract<keyof CommentUpdateManyMutationInput, string>
   | { name: 'content', alias?: string  } 
   
+export interface FileCreateInput {
+  id?: string | null
+  path?: string
+  filename?: string
+  mimetype?: string
+  encoding?: string
+}
+export type FileCreateInputInputObject =
+  | Extract<keyof FileCreateInput, string>
+  | { name: 'id', alias?: string  } 
+  | { name: 'path', alias?: string  } 
+  | { name: 'filename', alias?: string  } 
+  | { name: 'mimetype', alias?: string  } 
+  | { name: 'encoding', alias?: string  } 
+  
+export interface FileUpdateInput {
+  path?: string | null
+  filename?: string | null
+  mimetype?: string | null
+  encoding?: string | null
+}
+export type FileUpdateInputInputObject =
+  | Extract<keyof FileUpdateInput, string>
+  | { name: 'path', alias?: string  } 
+  | { name: 'filename', alias?: string  } 
+  | { name: 'mimetype', alias?: string  } 
+  | { name: 'encoding', alias?: string  } 
+  
+export interface FileUpdateManyMutationInput {
+  path?: string | null
+  filename?: string | null
+  mimetype?: string | null
+  encoding?: string | null
+}
+export type FileUpdateManyMutationInputInputObject =
+  | Extract<keyof FileUpdateManyMutationInput, string>
+  | { name: 'path', alias?: string  } 
+  | { name: 'filename', alias?: string  } 
+  | { name: 'mimetype', alias?: string  } 
+  | { name: 'encoding', alias?: string  } 
+  
 export interface UserSubscriptionWhereInput {
   mutation_in?: prisma.MutationType[]
   updatedFields_contains?: string | null
@@ -5578,6 +6307,27 @@ export type CommentSubscriptionWhereInputInputObject =
   | { name: 'OR', alias?: string  } 
   | { name: 'NOT', alias?: string  } 
   
+export interface FileSubscriptionWhereInput {
+  mutation_in?: prisma.MutationType[]
+  updatedFields_contains?: string | null
+  updatedFields_contains_every?: string[]
+  updatedFields_contains_some?: string[]
+  node?: FileWhereInput | null
+  AND?: FileSubscriptionWhereInput[]
+  OR?: FileSubscriptionWhereInput[]
+  NOT?: FileSubscriptionWhereInput[]
+}
+export type FileSubscriptionWhereInputInputObject =
+  | Extract<keyof FileSubscriptionWhereInput, string>
+  | { name: 'mutation_in', alias?: string  } 
+  | { name: 'updatedFields_contains', alias?: string  } 
+  | { name: 'updatedFields_contains_every', alias?: string  } 
+  | { name: 'updatedFields_contains_some', alias?: string  } 
+  | { name: 'node', alias?: string  } 
+  | { name: 'AND', alias?: string  } 
+  | { name: 'OR', alias?: string  } 
+  | { name: 'NOT', alias?: string  } 
+  
 
 export type RoleValues =
   | 'RESIDENT'
@@ -5664,6 +6414,22 @@ export type AddressOrderByInputValues =
   | 'unit_DESC'
   | 'room_ASC'
   | 'room_DESC'
+  | 'createdAt_ASC'
+  | 'createdAt_DESC'
+  | 'updatedAt_ASC'
+  | 'updatedAt_DESC'
+  
+export type FileOrderByInputValues =
+  | 'id_ASC'
+  | 'id_DESC'
+  | 'path_ASC'
+  | 'path_DESC'
+  | 'filename_ASC'
+  | 'filename_DESC'
+  | 'mimetype_ASC'
+  | 'mimetype_DESC'
+  | 'encoding_ASC'
+  | 'encoding_DESC'
   | 'createdAt_ASC'
   | 'createdAt_DESC'
   | 'updatedAt_ASC'
