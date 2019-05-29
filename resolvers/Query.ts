@@ -16,37 +16,9 @@ export const Query = prismaObjectType({
                 return context.prisma.user({id:userId});
             }
         });
-        t.list.field('getAdvicesByRole',{
-            type:'Advice',
-            args:{
-                id:requiredId({})
-            },
-            resolve:async (root,{id},context)=>{
-                const user=await context.prisma.user({id});
-                let advices:Advice[];
-                if (user.role==='RESIDENT'){
-                    advices= await context.prisma.advices({where:{owner:{id}}})
-                }else{
-                    advices= await context.prisma.advices()
-                }
-                return advices
-            }
-        });
-        t.list.field('getActivitiesByRole',{
-            type:'Activity',
-            args:{
-                id:requiredId({})
-            },
-            resolve:async (root,{id},context)=>{
-                const user=await context.prisma.user({id});
-                let activities:Activity[];
-                if (user.role==='RESIDENT'){
-                    activities=await context.prisma.activities({where:{owner:{id}}});
-                }else {
-                    activities=await context.prisma.activities()
-                }
-                return activities
-            }
-        });
+        t.list.field('uploads',{
+            type: 'File',
+            resolve:async (root,args,context)=>await context.prisma.files()
+        })
     },
 });

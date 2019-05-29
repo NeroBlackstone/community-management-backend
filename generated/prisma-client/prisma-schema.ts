@@ -1077,6 +1077,7 @@ scalar DateTime
 
 type File {
   id: ID!
+  fileId: String!
   path: String!
   filename: String!
   mimetype: String!
@@ -1091,6 +1092,7 @@ type FileConnection {
 
 input FileCreateInput {
   id: ID
+  fileId: String!
   path: String!
   filename: String!
   mimetype: String!
@@ -1105,6 +1107,8 @@ type FileEdge {
 enum FileOrderByInput {
   id_ASC
   id_DESC
+  fileId_ASC
+  fileId_DESC
   path_ASC
   path_DESC
   filename_ASC
@@ -1117,6 +1121,7 @@ enum FileOrderByInput {
 
 type FilePreviousValues {
   id: ID!
+  fileId: String!
   path: String!
   filename: String!
   mimetype: String!
@@ -1142,6 +1147,7 @@ input FileSubscriptionWhereInput {
 }
 
 input FileUpdateInput {
+  fileId: String
   path: String
   filename: String
   mimetype: String
@@ -1149,6 +1155,7 @@ input FileUpdateInput {
 }
 
 input FileUpdateManyMutationInput {
+  fileId: String
   path: String
   filename: String
   mimetype: String
@@ -1170,6 +1177,20 @@ input FileWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  fileId: String
+  fileId_not: String
+  fileId_in: [String!]
+  fileId_not_in: [String!]
+  fileId_lt: String
+  fileId_lte: String
+  fileId_gt: String
+  fileId_gte: String
+  fileId_contains: String
+  fileId_not_contains: String
+  fileId_starts_with: String
+  fileId_not_starts_with: String
+  fileId_ends_with: String
+  fileId_not_ends_with: String
   path: String
   path_not: String
   path_in: [String!]
@@ -1233,6 +1254,7 @@ input FileWhereInput {
 
 input FileWhereUniqueInput {
   id: ID
+  fileId: String
 }
 
 scalar Long

@@ -4,7 +4,12 @@
  */
 
 import * as types from "../types"
-
+import { core } from "nexus"
+declare global {
+  interface NexusGenCustomDefinitionMethods<TypeName extends string> {
+    upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
+  }
+}
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
@@ -759,6 +764,7 @@ export interface NexusGenInputs {
   }
   FileCreateInput: { // input type
     encoding: string; // String!
+    fileId: string; // String!
     filename: string; // String!
     id?: string | null; // ID
     mimetype: string; // String!
@@ -766,12 +772,14 @@ export interface NexusGenInputs {
   }
   FileUpdateInput: { // input type
     encoding?: string | null; // String
+    fileId?: string | null; // String
     filename?: string | null; // String
     mimetype?: string | null; // String
     path?: string | null; // String
   }
   FileUpdateManyMutationInput: { // input type
     encoding?: string | null; // String
+    fileId?: string | null; // String
     filename?: string | null; // String
     mimetype?: string | null; // String
     path?: string | null; // String
@@ -792,6 +800,20 @@ export interface NexusGenInputs {
     encoding_not_in?: string[] | null; // [String!]
     encoding_not_starts_with?: string | null; // String
     encoding_starts_with?: string | null; // String
+    fileId?: string | null; // String
+    fileId_contains?: string | null; // String
+    fileId_ends_with?: string | null; // String
+    fileId_gt?: string | null; // String
+    fileId_gte?: string | null; // String
+    fileId_in?: string[] | null; // [String!]
+    fileId_lt?: string | null; // String
+    fileId_lte?: string | null; // String
+    fileId_not?: string | null; // String
+    fileId_not_contains?: string | null; // String
+    fileId_not_ends_with?: string | null; // String
+    fileId_not_in?: string[] | null; // [String!]
+    fileId_not_starts_with?: string | null; // String
+    fileId_starts_with?: string | null; // String
     filename?: string | null; // String
     filename_contains?: string | null; // String
     filename_ends_with?: string | null; // String
@@ -852,6 +874,7 @@ export interface NexusGenInputs {
     path_starts_with?: string | null; // String
   }
   FileWhereUniqueInput: { // input type
+    fileId?: string | null; // String
     id?: string | null; // ID
   }
   UserCreateInput: { // input type
@@ -1247,7 +1270,8 @@ export interface NexusGenEnums {
   AddressOrderByInput: "building_ASC" | "building_DESC" | "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "room_ASC" | "room_DESC" | "unit_ASC" | "unit_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   AdviceOrderByInput: "content_ASC" | "content_DESC" | "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "title_ASC" | "title_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   CommentOrderByInput: "content_ASC" | "content_DESC" | "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
-  FileOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "encoding_ASC" | "encoding_DESC" | "filename_ASC" | "filename_DESC" | "id_ASC" | "id_DESC" | "mimetype_ASC" | "mimetype_DESC" | "path_ASC" | "path_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
+  FileOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "encoding_ASC" | "encoding_DESC" | "fileId_ASC" | "fileId_DESC" | "filename_ASC" | "filename_DESC" | "id_ASC" | "id_DESC" | "mimetype_ASC" | "mimetype_DESC" | "path_ASC" | "path_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
+  MutationType: "CREATED" | "DELETED" | "UPDATED"
   Role: "MANAGER" | "RESIDENT" | "WORKER"
   Sex: "FEMALE" | "MALE"
   Status: "APPROVED" | "PENDING" | "REJECTED"
@@ -1339,8 +1363,20 @@ export interface NexusGenRootTypes {
     cursor: string; // String!
     node: NexusGenRootTypes['Comment']; // Comment!
   }
+  CommentPreviousValues: { // root type
+    content: string; // String!
+    createdAt: any; // DateTime!
+    id: string; // ID!
+  }
+  CommentSubscriptionPayload: { // root type
+    mutation: NexusGenEnums['MutationType']; // MutationType!
+    node?: NexusGenRootTypes['Comment'] | null; // Comment
+    previousValues?: NexusGenRootTypes['CommentPreviousValues'] | null; // CommentPreviousValues
+    updatedFields?: string[] | null; // [String!]
+  }
   File: { // root type
     encoding: string; // String!
+    fileId: string; // String!
     filename: string; // String!
     id: string; // ID!
     mimetype: string; // String!
@@ -1362,6 +1398,7 @@ export interface NexusGenRootTypes {
     startCursor?: string | null; // String
   }
   Query: {};
+  Subscription: {};
   User: { // root type
     id: string; // ID!
     idNumber: string; // String!
@@ -1386,6 +1423,7 @@ export interface NexusGenRootTypes {
   ID: string;
   DateTime: any;
   Long: any;
+  Upload: any;
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
@@ -1491,6 +1529,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   AdviceOrderByInput: NexusGenEnums['AdviceOrderByInput'];
   CommentOrderByInput: NexusGenEnums['CommentOrderByInput'];
   FileOrderByInput: NexusGenEnums['FileOrderByInput'];
+  MutationType: NexusGenEnums['MutationType'];
   Role: NexusGenEnums['Role'];
   Sex: NexusGenEnums['Sex'];
   Status: NexusGenEnums['Status'];
@@ -1592,8 +1631,20 @@ export interface NexusGenFieldTypes {
     cursor: string; // String!
     node: NexusGenRootTypes['Comment']; // Comment!
   }
+  CommentPreviousValues: { // field return type
+    content: string; // String!
+    createdAt: any; // DateTime!
+    id: string; // ID!
+  }
+  CommentSubscriptionPayload: { // field return type
+    mutation: NexusGenEnums['MutationType']; // MutationType!
+    node: NexusGenRootTypes['Comment'] | null; // Comment
+    previousValues: NexusGenRootTypes['CommentPreviousValues'] | null; // CommentPreviousValues
+    updatedFields: string[] | null; // [String!]
+  }
   File: { // field return type
     encoding: string; // String!
+    fileId: string; // String!
     filename: string; // String!
     id: string; // ID!
     mimetype: string; // String!
@@ -1631,6 +1682,7 @@ export interface NexusGenFieldTypes {
     deleteUser: NexusGenRootTypes['User'] | null; // User
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    singleUpload: NexusGenRootTypes['File'] | null; // File
     updateActivity: NexusGenRootTypes['Activity'] | null; // Activity
     updateAddress: NexusGenRootTypes['Address'] | null; // Address
     updateAdvice: NexusGenRootTypes['Advice'] | null; // Advice
@@ -1674,12 +1726,14 @@ export interface NexusGenFieldTypes {
     file: NexusGenRootTypes['File'] | null; // File
     files: NexusGenRootTypes['File'][]; // [File!]!
     filesConnection: NexusGenRootTypes['FileConnection']; // FileConnection!
-    getActivitiesByRole: NexusGenRootTypes['Activity'][] | null; // [Activity!]
-    getAdvicesByRole: NexusGenRootTypes['Advice'][] | null; // [Advice!]
     me: NexusGenRootTypes['User'] | null; // User
+    uploads: NexusGenRootTypes['File'][] | null; // [File!]
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['User'][]; // [User!]!
     usersConnection: NexusGenRootTypes['UserConnection']; // UserConnection!
+  }
+  Subscription: { // field return type
+    comment: NexusGenRootTypes['CommentSubscriptionPayload'] | null; // CommentSubscriptionPayload
   }
   User: { // field return type
     activities: NexusGenRootTypes['Activity'][] | null; // [Activity!]
@@ -1808,6 +1862,9 @@ export interface NexusGenArgTypes {
       password?: string | null; // String
       phoneNumber?: string | null; // String
       role: NexusGenEnums['Role']; // Role!
+    }
+    singleUpload: { // args
+      file: any; // Upload!
     }
     updateActivity: { // args
       data: NexusGenInputs['ActivityUpdateInput']; // ActivityUpdateInput!
@@ -2011,12 +2068,6 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       where?: NexusGenInputs['FileWhereInput'] | null; // FileWhereInput
     }
-    getActivitiesByRole: { // args
-      id: string; // ID!
-    }
-    getAdvicesByRole: { // args
-      id: string; // ID!
-    }
     user: { // args
       where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
     }
@@ -2037,6 +2088,11 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenEnums['UserOrderByInput'] | null; // UserOrderByInput
       skip?: number | null; // Int
       where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+  }
+  Subscription: {
+    comment: { // args
+      adviceId: string; // ID!
     }
   }
   User: {
@@ -2075,15 +2131,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Activity" | "ActivityConnection" | "ActivityEdge" | "Address" | "AddressConnection" | "AddressEdge" | "Advice" | "AdviceConnection" | "AdviceEdge" | "AggregateActivity" | "AggregateAddress" | "AggregateAdvice" | "AggregateComment" | "AggregateFile" | "AggregateUser" | "AuthPayload" | "BatchPayload" | "Comment" | "CommentConnection" | "CommentEdge" | "File" | "FileConnection" | "FileEdge" | "Mutation" | "PageInfo" | "Query" | "User" | "UserConnection" | "UserEdge";
+export type NexusGenObjectNames = "Activity" | "ActivityConnection" | "ActivityEdge" | "Address" | "AddressConnection" | "AddressEdge" | "Advice" | "AdviceConnection" | "AdviceEdge" | "AggregateActivity" | "AggregateAddress" | "AggregateAdvice" | "AggregateComment" | "AggregateFile" | "AggregateUser" | "AuthPayload" | "BatchPayload" | "Comment" | "CommentConnection" | "CommentEdge" | "CommentPreviousValues" | "CommentSubscriptionPayload" | "File" | "FileConnection" | "FileEdge" | "Mutation" | "PageInfo" | "Query" | "Subscription" | "User" | "UserConnection" | "UserEdge";
 
 export type NexusGenInputNames = "ActivityCreateInput" | "ActivityCreateManyWithoutOwnerInput" | "ActivityCreateWithoutOwnerInput" | "ActivityScalarWhereInput" | "ActivityUpdateInput" | "ActivityUpdateManyDataInput" | "ActivityUpdateManyMutationInput" | "ActivityUpdateManyWithWhereNestedInput" | "ActivityUpdateManyWithoutOwnerInput" | "ActivityUpdateWithWhereUniqueWithoutOwnerInput" | "ActivityUpdateWithoutOwnerDataInput" | "ActivityUpsertWithWhereUniqueWithoutOwnerInput" | "ActivityWhereInput" | "ActivityWhereUniqueInput" | "AddressCreateInput" | "AddressCreateOneWithoutUsersInput" | "AddressCreateWithoutUsersInput" | "AddressUpdateInput" | "AddressUpdateManyMutationInput" | "AddressUpdateOneWithoutUsersInput" | "AddressUpdateWithoutUsersDataInput" | "AddressUpsertWithoutUsersInput" | "AddressWhereInput" | "AddressWhereUniqueInput" | "AdviceCreateInput" | "AdviceCreateManyWithoutOwnerInput" | "AdviceCreateOneWithoutCommentsInput" | "AdviceCreateWithoutCommentsInput" | "AdviceCreateWithoutOwnerInput" | "AdviceScalarWhereInput" | "AdviceUpdateInput" | "AdviceUpdateManyDataInput" | "AdviceUpdateManyMutationInput" | "AdviceUpdateManyWithWhereNestedInput" | "AdviceUpdateManyWithoutOwnerInput" | "AdviceUpdateOneWithoutCommentsInput" | "AdviceUpdateWithWhereUniqueWithoutOwnerInput" | "AdviceUpdateWithoutCommentsDataInput" | "AdviceUpdateWithoutOwnerDataInput" | "AdviceUpsertWithWhereUniqueWithoutOwnerInput" | "AdviceUpsertWithoutCommentsInput" | "AdviceWhereInput" | "AdviceWhereUniqueInput" | "CommentCreateInput" | "CommentCreateManyWithoutAdviceInput" | "CommentCreateManyWithoutOwnerInput" | "CommentCreateWithoutAdviceInput" | "CommentCreateWithoutOwnerInput" | "CommentScalarWhereInput" | "CommentUpdateInput" | "CommentUpdateManyDataInput" | "CommentUpdateManyMutationInput" | "CommentUpdateManyWithWhereNestedInput" | "CommentUpdateManyWithoutAdviceInput" | "CommentUpdateManyWithoutOwnerInput" | "CommentUpdateWithWhereUniqueWithoutAdviceInput" | "CommentUpdateWithWhereUniqueWithoutOwnerInput" | "CommentUpdateWithoutAdviceDataInput" | "CommentUpdateWithoutOwnerDataInput" | "CommentUpsertWithWhereUniqueWithoutAdviceInput" | "CommentUpsertWithWhereUniqueWithoutOwnerInput" | "CommentWhereInput" | "CommentWhereUniqueInput" | "FileCreateInput" | "FileUpdateInput" | "FileUpdateManyMutationInput" | "FileWhereInput" | "FileWhereUniqueInput" | "UserCreateInput" | "UserCreateManyWithoutAddressInput" | "UserCreateOneWithoutActivitiesInput" | "UserCreateOneWithoutAdvicesInput" | "UserCreateOneWithoutCommentsInput" | "UserCreateWithoutActivitiesInput" | "UserCreateWithoutAddressInput" | "UserCreateWithoutAdvicesInput" | "UserCreateWithoutCommentsInput" | "UserScalarWhereInput" | "UserUpdateInput" | "UserUpdateManyDataInput" | "UserUpdateManyMutationInput" | "UserUpdateManyWithWhereNestedInput" | "UserUpdateManyWithoutAddressInput" | "UserUpdateOneRequiredWithoutActivitiesInput" | "UserUpdateOneRequiredWithoutAdvicesInput" | "UserUpdateOneWithoutCommentsInput" | "UserUpdateWithWhereUniqueWithoutAddressInput" | "UserUpdateWithoutActivitiesDataInput" | "UserUpdateWithoutAddressDataInput" | "UserUpdateWithoutAdvicesDataInput" | "UserUpdateWithoutCommentsDataInput" | "UserUpsertWithWhereUniqueWithoutAddressInput" | "UserUpsertWithoutActivitiesInput" | "UserUpsertWithoutAdvicesInput" | "UserUpsertWithoutCommentsInput" | "UserWhereInput" | "UserWhereUniqueInput";
 
-export type NexusGenEnumNames = "ActivityOrderByInput" | "AddressOrderByInput" | "AdviceOrderByInput" | "CommentOrderByInput" | "FileOrderByInput" | "Role" | "Sex" | "Status" | "UserOrderByInput";
+export type NexusGenEnumNames = "ActivityOrderByInput" | "AddressOrderByInput" | "AdviceOrderByInput" | "CommentOrderByInput" | "FileOrderByInput" | "MutationType" | "Role" | "Sex" | "Status" | "UserOrderByInput";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "Long" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "Long" | "String" | "Upload";
 
 export type NexusGenUnionNames = never;
 

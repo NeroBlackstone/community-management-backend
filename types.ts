@@ -1,6 +1,7 @@
 import {Prisma} from './generated/prisma-client'
 import {stringArg, core, intArg, idArg} from "nexus";
 
+
 //定义一个上下文接口，具有Prisma类型的prisma-client，和any类型的http请求
 export interface Context {
     prisma:Prisma

@@ -367,6 +367,8 @@ export type AddressOrderByInput =
 export type FileOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "fileId_ASC"
+  | "fileId_DESC"
   | "path_ASC"
   | "path_DESC"
   | "filename_ASC"
@@ -738,6 +740,7 @@ export type CommentWhereUniqueInput = AtLeastOne<{
 
 export type FileWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  fileId?: Maybe<String>;
 }>;
 
 export interface FileWhereInput {
@@ -755,6 +758,20 @@ export interface FileWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  fileId?: Maybe<String>;
+  fileId_not?: Maybe<String>;
+  fileId_in?: Maybe<String[] | String>;
+  fileId_not_in?: Maybe<String[] | String>;
+  fileId_lt?: Maybe<String>;
+  fileId_lte?: Maybe<String>;
+  fileId_gt?: Maybe<String>;
+  fileId_gte?: Maybe<String>;
+  fileId_contains?: Maybe<String>;
+  fileId_not_contains?: Maybe<String>;
+  fileId_starts_with?: Maybe<String>;
+  fileId_not_starts_with?: Maybe<String>;
+  fileId_ends_with?: Maybe<String>;
+  fileId_not_ends_with?: Maybe<String>;
   path?: Maybe<String>;
   path_not?: Maybe<String>;
   path_in?: Maybe<String[] | String>;
@@ -1712,6 +1729,7 @@ export interface CommentUpdateManyMutationInput {
 
 export interface FileCreateInput {
   id?: Maybe<ID_Input>;
+  fileId: String;
   path: String;
   filename: String;
   mimetype: String;
@@ -1719,6 +1737,7 @@ export interface FileCreateInput {
 }
 
 export interface FileUpdateInput {
+  fileId?: Maybe<String>;
   path?: Maybe<String>;
   filename?: Maybe<String>;
   mimetype?: Maybe<String>;
@@ -1726,6 +1745,7 @@ export interface FileUpdateInput {
 }
 
 export interface FileUpdateManyMutationInput {
+  fileId?: Maybe<String>;
   path?: Maybe<String>;
   filename?: Maybe<String>;
   mimetype?: Maybe<String>;
@@ -2419,6 +2439,7 @@ export interface AggregateCommentSubscription
 
 export interface File {
   id: ID_Output;
+  fileId: String;
   path: String;
   filename: String;
   mimetype: String;
@@ -2427,6 +2448,7 @@ export interface File {
 
 export interface FilePromise extends Promise<File>, Fragmentable {
   id: () => Promise<ID_Output>;
+  fileId: () => Promise<String>;
   path: () => Promise<String>;
   filename: () => Promise<String>;
   mimetype: () => Promise<String>;
@@ -2437,6 +2459,7 @@ export interface FileSubscription
   extends Promise<AsyncIterator<File>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  fileId: () => Promise<AsyncIterator<String>>;
   path: () => Promise<AsyncIterator<String>>;
   filename: () => Promise<AsyncIterator<String>>;
   mimetype: () => Promise<AsyncIterator<String>>;
@@ -2447,6 +2470,7 @@ export interface FileNullablePromise
   extends Promise<File | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  fileId: () => Promise<String>;
   path: () => Promise<String>;
   filename: () => Promise<String>;
   mimetype: () => Promise<String>;
@@ -2813,6 +2837,7 @@ export interface FileSubscriptionPayloadSubscription
 
 export interface FilePreviousValues {
   id: ID_Output;
+  fileId: String;
   path: String;
   filename: String;
   mimetype: String;
@@ -2823,6 +2848,7 @@ export interface FilePreviousValuesPromise
   extends Promise<FilePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  fileId: () => Promise<String>;
   path: () => Promise<String>;
   filename: () => Promise<String>;
   mimetype: () => Promise<String>;
@@ -2833,6 +2859,7 @@ export interface FilePreviousValuesSubscription
   extends Promise<AsyncIterator<FilePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  fileId: () => Promise<AsyncIterator<String>>;
   path: () => Promise<AsyncIterator<String>>;
   filename: () => Promise<AsyncIterator<String>>;
   mimetype: () => Promise<AsyncIterator<String>>;

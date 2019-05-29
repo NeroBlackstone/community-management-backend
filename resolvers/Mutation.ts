@@ -6,7 +6,12 @@ import {sign} from 'jsonwebtoken'
 import {Role, Sex} from "./Enum";
 import {requiredId, requiredInt, requiredString} from "../types";
 import {Address} from "../generated/prisma-client";
+import {Upload} from "./index";
+import * as mkdirp from 'mkdirp'
+import * as shortid from 'shortid'
+import {createWriteStream} from "fs";
 
+const uploadDir = './uploads';
 
 export const Mutation = prismaObjectType({
     name:'Mutation',
@@ -255,6 +260,33 @@ export const Mutation = prismaObjectType({
                     });
                 }
             }
+        });
+        t.field('singleUpload',{
+            type:'File',
+            args:{file: arg({type:Upload,required:true})},
+            resolve:async (parent,{file},context)=>processUpload(file,context)
         })
     }
 });
+
+async function processUpload(upload,context){
+    mkdirp.sync(uploadDir);
+    const {createReadStream, filename, mimetype, encoding}=await upload;
+    const stream=createReadStream();
+    const {fileId,path}=await storeUpload({stream,filename});
+    return recordFile({fileId,filename,mimetype,encoding,path},context)
+};
+
+async function storeUpload({stream,filename}):Promise<any>{
+    const fileId=shortid.generate();
+    const path=`${uploadDir}/${fileId}-${filename}`;
+    return new Promise((resolve, reject) =>
+        stream
+            .pipe(createWriteStream(path))
+            .on('finish', () => resolve({ fileId, path }))
+            .on('error', reject),
+    )
+}
+
+const recordFile=async ({fileId,filename,mimetype,encoding,path},context)=>
+    await context.prisma.createFile({fileId,filename,mimetype,encoding,path});

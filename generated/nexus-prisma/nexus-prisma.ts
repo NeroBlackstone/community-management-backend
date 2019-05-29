@@ -1835,6 +1835,7 @@ export interface AggregateCommentFieldDetails {
 type FileObject =
   | FileFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'fileId', args?: [] | false, alias?: string  } 
   | { name: 'path', args?: [] | false, alias?: string  } 
   | { name: 'filename', args?: [] | false, alias?: string  } 
   | { name: 'mimetype', args?: [] | false, alias?: string  } 
@@ -1842,6 +1843,7 @@ type FileObject =
 
 type FileFields =
   | 'id'
+  | 'fileId'
   | 'path'
   | 'filename'
   | 'mimetype'
@@ -1854,6 +1856,14 @@ type FileFields =
 export interface FileFieldDetails {
   id: {
     type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  fileId: {
+    type: 'String'
     args: {}
     description: string
     list: undefined
@@ -3586,6 +3596,7 @@ export interface FileSubscriptionPayloadFieldDetails {
 type FilePreviousValuesObject =
   | FilePreviousValuesFields
   | { name: 'id', args?: [] | false, alias?: string  } 
+  | { name: 'fileId', args?: [] | false, alias?: string  } 
   | { name: 'path', args?: [] | false, alias?: string  } 
   | { name: 'filename', args?: [] | false, alias?: string  } 
   | { name: 'mimetype', args?: [] | false, alias?: string  } 
@@ -3593,6 +3604,7 @@ type FilePreviousValuesObject =
 
 type FilePreviousValuesFields =
   | 'id'
+  | 'fileId'
   | 'path'
   | 'filename'
   | 'mimetype'
@@ -3605,6 +3617,14 @@ type FilePreviousValuesFields =
 export interface FilePreviousValuesFieldDetails {
   id: {
     type: 'ID'
+    args: {}
+    description: string
+    list: undefined
+    nullable: false
+    resolve: undefined
+  }
+  fileId: {
+    type: 'String'
     args: {}
     description: string
     list: undefined
@@ -4367,10 +4387,12 @@ export type CommentWhereUniqueInputInputObject =
   
 export interface FileWhereUniqueInput {
   id?: string | null
+  fileId?: string | null
 }
 export type FileWhereUniqueInputInputObject =
   | Extract<keyof FileWhereUniqueInput, string>
   | { name: 'id', alias?: string  } 
+  | { name: 'fileId', alias?: string  } 
   
 export interface FileWhereInput {
   id?: string | null
@@ -4387,6 +4409,20 @@ export interface FileWhereInput {
   id_not_starts_with?: string | null
   id_ends_with?: string | null
   id_not_ends_with?: string | null
+  fileId?: string | null
+  fileId_not?: string | null
+  fileId_in?: string[]
+  fileId_not_in?: string[]
+  fileId_lt?: string | null
+  fileId_lte?: string | null
+  fileId_gt?: string | null
+  fileId_gte?: string | null
+  fileId_contains?: string | null
+  fileId_not_contains?: string | null
+  fileId_starts_with?: string | null
+  fileId_not_starts_with?: string | null
+  fileId_ends_with?: string | null
+  fileId_not_ends_with?: string | null
   path?: string | null
   path_not?: string | null
   path_in?: string[]
@@ -4463,6 +4499,20 @@ export type FileWhereInputInputObject =
   | { name: 'id_not_starts_with', alias?: string  } 
   | { name: 'id_ends_with', alias?: string  } 
   | { name: 'id_not_ends_with', alias?: string  } 
+  | { name: 'fileId', alias?: string  } 
+  | { name: 'fileId_not', alias?: string  } 
+  | { name: 'fileId_in', alias?: string  } 
+  | { name: 'fileId_not_in', alias?: string  } 
+  | { name: 'fileId_lt', alias?: string  } 
+  | { name: 'fileId_lte', alias?: string  } 
+  | { name: 'fileId_gt', alias?: string  } 
+  | { name: 'fileId_gte', alias?: string  } 
+  | { name: 'fileId_contains', alias?: string  } 
+  | { name: 'fileId_not_contains', alias?: string  } 
+  | { name: 'fileId_starts_with', alias?: string  } 
+  | { name: 'fileId_not_starts_with', alias?: string  } 
+  | { name: 'fileId_ends_with', alias?: string  } 
+  | { name: 'fileId_not_ends_with', alias?: string  } 
   | { name: 'path', alias?: string  } 
   | { name: 'path_not', alias?: string  } 
   | { name: 'path_in', alias?: string  } 
@@ -6163,6 +6213,7 @@ export type CommentUpdateManyMutationInputInputObject =
   
 export interface FileCreateInput {
   id?: string | null
+  fileId?: string
   path?: string
   filename?: string
   mimetype?: string
@@ -6171,12 +6222,14 @@ export interface FileCreateInput {
 export type FileCreateInputInputObject =
   | Extract<keyof FileCreateInput, string>
   | { name: 'id', alias?: string  } 
+  | { name: 'fileId', alias?: string  } 
   | { name: 'path', alias?: string  } 
   | { name: 'filename', alias?: string  } 
   | { name: 'mimetype', alias?: string  } 
   | { name: 'encoding', alias?: string  } 
   
 export interface FileUpdateInput {
+  fileId?: string | null
   path?: string | null
   filename?: string | null
   mimetype?: string | null
@@ -6184,12 +6237,14 @@ export interface FileUpdateInput {
 }
 export type FileUpdateInputInputObject =
   | Extract<keyof FileUpdateInput, string>
+  | { name: 'fileId', alias?: string  } 
   | { name: 'path', alias?: string  } 
   | { name: 'filename', alias?: string  } 
   | { name: 'mimetype', alias?: string  } 
   | { name: 'encoding', alias?: string  } 
   
 export interface FileUpdateManyMutationInput {
+  fileId?: string | null
   path?: string | null
   filename?: string | null
   mimetype?: string | null
@@ -6197,6 +6252,7 @@ export interface FileUpdateManyMutationInput {
 }
 export type FileUpdateManyMutationInputInputObject =
   | Extract<keyof FileUpdateManyMutationInput, string>
+  | { name: 'fileId', alias?: string  } 
   | { name: 'path', alias?: string  } 
   | { name: 'filename', alias?: string  } 
   | { name: 'mimetype', alias?: string  } 
@@ -6422,6 +6478,8 @@ export type AddressOrderByInputValues =
 export type FileOrderByInputValues =
   | 'id_ASC'
   | 'id_DESC'
+  | 'fileId_ASC'
+  | 'fileId_DESC'
   | 'path_ASC'
   | 'path_DESC'
   | 'filename_ASC'

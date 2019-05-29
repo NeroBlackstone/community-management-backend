@@ -51,6 +51,7 @@ type Comment {
 
 type File{
   id: ID! @id
+  fileId: String! @unique
   path: String!
   filename: String!
   mimetype: String!
