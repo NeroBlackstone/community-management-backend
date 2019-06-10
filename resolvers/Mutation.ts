@@ -37,13 +37,13 @@ export const Mutation = prismaObjectType({
                     phoneNumber:phoneNumber
                 });
                 if (!userInDatabase){
-                    throw new Error('You are not a resident of this community')
+                    throw new Error('您不是本社区居民。')
                 }
                 let user=await ctx.prisma.user({
                     idNumber:idNumber,
                 });
                 if (user.password){
-                    throw new Error('Your account has been registered.')
+                    throw new Error('您已注册')
                 }
                 user=await ctx.prisma.updateUser({
                     data:{

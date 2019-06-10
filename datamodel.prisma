@@ -8,7 +8,8 @@ type User {
   sex: Sex
   address: Address @relation(name: "ResidentIn")
   activities: [Activity!]! @relation(name: "ActivityOwner", onDelete: CASCADE)
-  comments: [Comment!]! @relation(name: "CommentOwner", onDelete: CASCADE)
+  comments: [Comment!]! @relation(name: "CommentOwner", onDelete:ete: CASC
+ CASCADE)
   advices: [Advice!]! @relation(name: "AdviceOwner", onDelete: CASCADE)
 }
 
