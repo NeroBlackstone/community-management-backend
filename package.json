@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --no-notify --respawn --transpileOnly ./"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "graphql": "14.2.1",
     "graphql-shield": "^5.3.5",
     "graphql-upload": "^8.0.6",
